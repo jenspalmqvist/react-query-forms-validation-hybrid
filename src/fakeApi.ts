@@ -7,7 +7,7 @@ const timeout = async () => {
     }, Math.random() * 5000)
   );
 };
-export const fakeApi = async (category: Category) => {
+export const fakeApi = async (category: Category | undefined) => {
   if (category === "movies") {
     await timeout();
     console.log("Hej?");
@@ -20,4 +20,5 @@ export const fakeApi = async (category: Category) => {
       "Learn to read - For dummies",
     ];
   }
+  return [];
 };
