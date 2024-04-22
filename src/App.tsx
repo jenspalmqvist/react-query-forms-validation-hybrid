@@ -1,16 +1,16 @@
 import "./App.css";
 // import { FavoritesWithFetchAndUseEffect } from "./FavoritesWithFetchAndUseEffect";
 // import { FavoritesWithUseQuery } from "./FavoritesWithUseQuery";
-// import { PersonForm } from "./PersonForm";
-import { RecipeView } from "./RecipeView";
+import { PersonForm } from "./PersonForm";
+// import { RecipeView } from "./RecipeView";
 
 function App() {
   return (
     <>
       {/* <FavoritesWithFetchAndUseEffect />
-      <FavoritesWithUseQuery />
-      <PersonForm /> */}
-      <RecipeView />
+      <FavoritesWithUseQuery /> */}
+      <PersonForm />
+      {/* <RecipeView /> */}
     </>
   );
 }
