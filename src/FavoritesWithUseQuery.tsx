@@ -5,14 +5,15 @@ import { useQuery } from "@tanstack/react-query";
 export const FavoritesWithUseQuery = () => {
   const [category, setCategory] = useState<Category>();
 
-  const getAndMutate = async () => {
-    const response = await fakeApi(category);
-    return response.map((r) => r.toUpperCase());
-  };
+  // const getAndMutate = async () => {
+  //   const response = ;
+  //   return response.map((r) => r.toUpperCase());
+  // };
 
   const { isLoading, error, data, refetch, isRefetching } = useQuery({
     queryKey: ["Favorites", category],
-    queryFn: () => getAndMutate(),
+    queryFn: () => fakeApi(category),
+    staleTime: 60000, // Hur gammal får datan vara innan vi hämtar den igen i millisekunder
   });
 
   return (
