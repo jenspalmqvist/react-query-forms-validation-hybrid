@@ -1,6 +1,8 @@
+import { useMutation } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { fakeApiPost } from "./fakeApi";
 
-type PersonFormType = {
+export type PersonFormType = {
   firstName: string;
   lastName: string;
   age: number;
@@ -14,8 +16,13 @@ export const PersonForm = () => {
     formState: { errors },
   } = useForm<PersonFormType>();
 
-  const sendFormData: SubmitHandler<PersonFormType> = (data) =>
-    console.log(data);
+  const { mutate, isPending, isSuccess } = useMutation({
+    mutationFn: async (data: PersonFormType) => await fakeApiPost(data),
+    onSuccess: () => console.log("Success!"),
+  });
+
+  const sendFormData: SubmitHandler<PersonFormType> = (data) => mutate(data);
+
   return (
     <form onSubmit={handleSubmit(sendFormData)}>
       <input
@@ -30,6 +37,13 @@ export const PersonForm = () => {
       <input type="number" {...register("age", { valueAsNumber: true })} />
       <input type="email" {...register("email")} />
       <input type="submit" />
+      {isPending ? (
+        <p> Sending data! </p>
+      ) : isSuccess ? (
+        <p> Data sent! </p>
+      ) : (
+        <></>
+      )}
     </form>
   );
 };

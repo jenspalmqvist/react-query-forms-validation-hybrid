@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Category, fakeApi } from "./fakeApi";
+import { Category, fakeApiGet } from "./fakeApi";
 import { useQuery } from "@tanstack/react-query";
 
 export const FavoritesWithUseQuery = () => {
@@ -12,7 +12,7 @@ export const FavoritesWithUseQuery = () => {
 
   const { isLoading, error, data, refetch, isRefetching } = useQuery({
     queryKey: ["Favorites", category],
-    queryFn: () => fakeApi(category),
+    queryFn: () => fakeApiGet(category),
     staleTime: 60000, // Hur gammal får datan vara innan vi hämtar den igen i millisekunder
   });
 

@@ -1,13 +1,15 @@
+import { PersonFormType } from "./PersonForm";
+
 export type Category = "movies" | "books";
 
 const timeout = async () => {
   return new Promise((res) =>
     setTimeout(() => {
       res("");
-    }, Math.random() * 5000)
+    }, Math.random() * 2000)
   );
 };
-export const fakeApi = async (category: Category | undefined) => {
+export const fakeApiGet = async (category: Category | undefined) => {
   if (category === "movies") {
     await timeout();
     console.log("Hej?");
@@ -21,4 +23,9 @@ export const fakeApi = async (category: Category | undefined) => {
     ];
   }
   return [];
+};
+
+export const fakeApiPost = (data: PersonFormType) => {
+  timeout();
+  console.log(data);
 };
