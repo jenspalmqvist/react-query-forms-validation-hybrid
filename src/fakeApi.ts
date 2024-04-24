@@ -1,3 +1,5 @@
+import { PersonFormType } from "./PersonForm";
+
 export type Category = "movies" | "books";
 
 const timeout = async () => {
@@ -7,7 +9,7 @@ const timeout = async () => {
     }, Math.random() * 5000)
   );
 };
-export const fakeApi = async (category: Category | undefined) => {
+export const fakeApiGet = async (category: Category | undefined) => {
   if (category === "movies") {
     await timeout();
     console.log("Hej?");
@@ -21,4 +23,9 @@ export const fakeApi = async (category: Category | undefined) => {
     ];
   }
   return [];
+};
+
+export const fakeApiPost = async (person: PersonFormType) => {
+  await timeout();
+  console.log(person);
 };

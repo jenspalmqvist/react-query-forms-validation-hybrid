@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { Category, fakeApi } from "./fakeApi";
+import { Category, fakeApiGet } from "./fakeApi";
 import { useQuery } from "@tanstack/react-query";
 
 export const FavoritesWithUseQuery = () => {
   const [category, setCategory] = useState<Category>();
 
   const getAndMutate = async () => {
-    const response = await fakeApi(category);
+    const response = await fakeApiGet(category);
     return response.map((r) => r.toUpperCase());
   };
 

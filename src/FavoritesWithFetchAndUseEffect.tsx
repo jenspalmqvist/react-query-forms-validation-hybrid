@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Category, fakeApi } from "./fakeApi";
+import { Category, fakeApiGet } from "./fakeApi";
 
 export const FavoritesWithFetchAndUseEffect = () => {
   const [category, setCategory] = useState<Category>();
@@ -17,7 +17,7 @@ export const FavoritesWithFetchAndUseEffect = () => {
       setIsLoading(true);
       const getData = async () => {
         if (category) {
-          const apiData = await fakeApi(category);
+          const apiData = await fakeApiGet(category);
           if (!ignore) {
             setData(apiData);
             setIsLoading(false);
