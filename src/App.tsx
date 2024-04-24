@@ -8,8 +8,8 @@ function App() {
   return (
     <>
       {/* <FavoritesWithFetchAndUseEffect />
-      <FavoritesWithUseQuery />
-      <PersonForm /> */}
+      <FavoritesWithUseQuery /> */}
+      {/* <PersonForm /> */}
       <RecipeView />
     </>
   );

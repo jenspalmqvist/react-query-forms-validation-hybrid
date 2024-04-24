@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 
 type ApiRecipe = {
@@ -40,6 +40,8 @@ export const RecipeView = () => {
     return data;
   };
 
+  const queryClient = useQueryClient();
+
   const { data } = useQuery({
     queryKey: ["Recipes"],
     queryFn: () => getRecipes(),
@@ -60,6 +62,7 @@ export const RecipeView = () => {
   const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: async (data: ApiRecipe) => postRecipe(data),
     onMutate: (data) => console.log(data),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["Recipes"] }),
   });
 
   const { register, handleSubmit, control } = useForm<FormRecipe>({
@@ -80,10 +83,11 @@ export const RecipeView = () => {
     name: "categories",
   });
 
-  const { fields: instructionFields } = useFieldArray({
-    control,
-    name: "instructions",
-  });
+  const { fields: instructionFields, append: appendInstruction } =
+    useFieldArray({
+      control,
+      name: "instructions",
+    });
 
   const mapRecipe = (data: FormRecipe): ApiRecipe => {
     return {
@@ -115,44 +119,37 @@ export const RecipeView = () => {
         <input {...register("price")} />
         <br />
         <label>Instructions:</label>
+
         {instructionFields.map((instruction, index) => (
-          <input
-            key={"Instruction" + index}
-            {...register(`instructions.${index}.value`)}
-          />
+          <div key={instruction.id}>
+            <input {...register(`instructions.${index}.value`)} />
+          </div>
         ))}
+        <button type="button" onClick={() => appendInstruction({ value: "" })}>
+          Add instruction
+        </button>
         <br />
         <label>categories</label>
         {categoryFields.map((category, index) => (
-          <input
-            key={"Category" + index}
-            {...register(`categories.${index}.value`)}
-          />
+          <div key={category.id}>
+            <input {...register(`categories.${index}.value`)} />
+          </div>
         ))}
         <br />
         <label>ingredients</label>
         {ingredientFields.map((ingredient, index) => (
-          <>
-            <input
-              key={"ingredientName" + index}
-              {...register(`ingredients.${index}.name`)}
-            />
-            <input
-              key={"ingredientAmount" + index}
-              {...register(`ingredients.${index}.amount`)}
-            />
-            <input
-              key={"ingredientUnit" + index}
-              {...register(`ingredients.${index}.unit`)}
-            />
-          </>
+          <div key={ingredient.id}>
+            <input {...register(`ingredients.${index}.name`)} />
+            <input {...register(`ingredients.${index}.amount`)} />
+            <input {...register(`ingredients.${index}.unit`)} />
+          </div>
         ))}
         <br />
         <input type="submit" />
         {isPending ? (
           <p>Sending recipe</p>
         ) : isSuccess ? (
-          <>Recipe sent succesfully</>
+          <p>Recipe sent succesfully</p>
         ) : (
           <></>
         )}
